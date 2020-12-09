@@ -1,0 +1,8 @@
+pandoc: 2.7.3
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  nasapower: nasapower.html
+  nasapower_states_example: nasapower_states_example.html
+last_built: 2020-12-09T04:47Z
+
