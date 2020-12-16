@@ -162,15 +162,15 @@
 <h2 class="hasAnchor">
 <a href="#major-changes-to-functionality" class="anchor"></a>Major Changes to Functionality</h2>
 <ul>
-<li><p>Due to the removal of the CRAN package <em>APSIM</em> from CRAN, the removal of the <code><a href="../reference/nasapower-defunct.html">create_met()</a></code> function has been implemented sooner than expected to keep <em>nasapower</em> on CRAN.</p></li>
-<li><p>Deprecates <code><a href="../reference/nasapower-defunct.html">create_met()</a></code></p></li>
+<li><p>Due to the removal of the CRAN package <em>APSIM</em> from CRAN, the removal of the <code>create_met()</code> function has been implemented sooner than expected to keep <em>nasapower</em> on CRAN.</p></li>
+<li><p>Deprecates <code>create_met()</code></p></li>
 </ul>
 </div>
 <div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Properly deprecates <code><a href="../reference/nasapower-defunct.html">create_icasa()</a></code>
+<li>Properly deprecates <code>create_icasa()</code>
 </li>
 </ul>
 </div>
@@ -191,7 +191,7 @@
 <h2 class="hasAnchor">
 <a href="#major-changes-to-functionality-1" class="anchor"></a>Major Changes to Functionality</h2>
 <ul>
-<li><p>Following a UNIX-like philosophy, this release removes functionality to write APSIM .met and DSSAT ICASA files to disk. <em>nasapower</em> now will only fetch the appropriate data and return a <code>tibble()</code> object in-session, please use <a href="https://cran.r-project.org/package=apsimx">apsimx</a> or the POWER web API data access viewer, <a href="https://power.larc.nasa.gov/data-access-viewer/" class="uri">https://power.larc.nasa.gov/data-access-viewer/</a>, for fetching and/or writing .met or .icasa files, respectively. Note that <code><a href="../reference/nasapower-defunct.html">create_icasa()</a></code> ideally should have been deprecated, but the server was not responding properly when queried for some time before the current release of <em>nasapower</em> so the function has been removed.</p></li>
+<li><p>Following a UNIX-like philosophy, this release removes functionality to write APSIM .met and DSSAT ICASA files to disk. <em>nasapower</em> now will only fetch the appropriate data and return a <code>tibble()</code> object in-session, please use <a href="https://cran.r-project.org/package=apsimx">apsimx</a> or the POWER web API data access viewer, <a href="https://power.larc.nasa.gov/data-access-viewer/" class="uri">https://power.larc.nasa.gov/data-access-viewer/</a>, for fetching and/or writing .met or .icasa files, respectively. Note that <code>create_icasa()</code> ideally should have been deprecated, but the server was not responding properly when queried for some time before the current release of <em>nasapower</em> so the function has been removed.</p></li>
 <li><p>Add ability to <code><a href="../reference/get_power.html">get_power()</a></code> to accept a user-provided <code>site_elevation</code> parameter that is passed to the API. When this is used it will return a corrected atmospheric pressure value adjusted to the elevation provided.</p></li>
 </ul>
 </div>
@@ -242,7 +242,7 @@
 <ul>
 <li><p>Fix issues reported at <a href="https://cloud.r-project.org//web/checks/check_results_nasapower.html" class="uri">https://cloud.r-project.org//web/checks/check_results_nasapower.html</a> with failing tests. These tests should be skipped on CRAN but were not.</p></li>
 <li><p>Fixes bug where missing values in POWER data were not properly replaced with <code>NA</code> in <code>tibble</code> and metFile outputs</p></li>
-<li><p>Fixes bug in documentation for <code><a href="../reference/nasapower-defunct.html">create_icasa()</a></code> where the parameter for <code>file_out</code> was misidentified as just <code>file</code></p></li>
+<li><p>Fixes bug in documentation for <code>create_icasa()</code> where the parameter for <code>file_out</code> was misidentified as just <code>file</code></p></li>
 </ul>
 </div>
 <div id="minor-changes-2" class="section level2">
@@ -389,7 +389,7 @@
 <ul>
 <li><p>Corrects issue where <code>if()</code> was called with a vector of length 2 or more</p></li>
 <li><p>Corrects logical operators <code><a href="https://rdrr.io/r/base/Logic.html">&amp;&amp;</a></code> and <code><a href="https://rdrr.io/r/base/Logic.html">||</a></code> where they should be <code><a href="https://rdrr.io/r/base/Logic.html">&amp;</a></code> or <code><a href="https://rdrr.io/r/base/Logic.html">|</a></code></p></li>
-<li><p>Removes extra code in <code><a href="../reference/nasapower-defunct.html">create_icasa()</a></code> and <code><a href="../reference/nasapower-defunct.html">create_met()</a></code> that performed a duplicated check of <code>latlon</code> values</p></li>
+<li><p>Removes extra code in <code>create_icasa()</code> and <code>create_met()</code> that performed a duplicated check of <code>latlon</code> values</p></li>
 <li><p>Removes unnecessary checks for <code>latlon</code> in <code><a href="../reference/get_power.html">get_power()</a></code></p></li>
 </ul>
 </div>
@@ -419,8 +419,8 @@
 <li><p>Provides access to all three communities, AG, SSE and and SB, not just AG</p></li>
 <li><p>Uses new ‘POWER’ ‘API’ to download new 1/2 x 1/2 degree data</p></li>
 <li><p>Adds function <code><a href="../reference/get_power.html">get_power()</a></code> to get weather data and optionally metadata as well</p></li>
-<li><p>Adds function <code><a href="../reference/nasapower-defunct.html">create_met()</a></code> to create ‘APSIM’ met objects from ‘POWER’ data</p></li>
-<li><p>Adds function <code><a href="../reference/nasapower-defunct.html">create_icasa()</a></code> to create a text file of weather data for use in ‘DSSAT’ crop modelling</p></li>
+<li><p>Adds function <code>create_met()</code> to create ‘APSIM’ met objects from ‘POWER’ data</p></li>
+<li><p>Adds function <code>create_icasa()</code> to create a text file of weather data for use in ‘DSSAT’ crop modelling</p></li>
 <li><p>Internally, replaces <em>httr</em> package with <em>crul</em></p></li>
 </ul>
 <div id="deprecated-functions" class="section level3">
