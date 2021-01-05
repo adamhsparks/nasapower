@@ -301,13 +301,13 @@
 <h2 class="hasAnchor">
 <a href="#creating-spatial-objects-from-get_power" class="anchor"></a>Creating Spatial Objects from <code>get_power</code>
 </h2>
-<p>If you require spatial objects to work with, it is rather simple to convert the resulting tidy data frame from <code><a href="../reference/get_power.html">get_power()</a></code> to a spatial object in R using <code><a href="https://rdrr.io/pkg/terra/man/rast.html">terra::rast(type = "xyz")</a></code>.</p>
+<p>If you require spatial objects to work with, it is rather simple to convert the resulting tidy data frame from <code><a href="../reference/get_power.html">get_power()</a></code> to a spatial object in R using <code>terra::rast(type = "xyz")</code>.</p>
 <div id="converting-regional-data-to-a-spatraster-object" class="section level3">
 <h3 class="hasAnchor">
 <a href="#converting-regional-data-to-a-spatraster-object" class="anchor"></a>Converting Regional Data to a SpatRaster() Object</h3>
 <p>Using <code>lapply</code> and <code>split</code> it is easy to create stacks of raster objects from a regional query.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://rspatial.org/terra">"terra"</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"terra"</span><span class="op">)</span>
 <span class="co">#&gt; terra version 0.8.6 (beta-release)</span>
 <span class="co"># Use split to create a list of data frames split by YYYYMMDD</span>
 <span class="va">daily_region_ag</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">daily_region_ag</span>, <span class="va">daily_region_ag</span><span class="op">$</span><span class="va">YYYYMMDD</span><span class="op">)</span>
@@ -317,7 +317,7 @@
   <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span>
     X <span class="op">=</span> <span class="va">daily_region_ag</span>,
     FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-      <span class="va">x</span><span class="op">[</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/names.html">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="st">"YEAR"</span>, <span class="st">"MM"</span>, <span class="st">"DD"</span>, <span class="st">"DOY"</span>, <span class="st">"YYYYMMDD"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
+      <span class="va">x</span><span class="op">[</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"YEAR"</span>, <span class="st">"MM"</span>, <span class="st">"DD"</span>, <span class="st">"DOY"</span>, <span class="st">"YYYYMMDD"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
   <span class="op">)</span>
 
 <span class="co"># Convert the data into matrix() objects for terra to work with</span>
@@ -327,7 +327,7 @@
 <span class="va">RH2M_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span>
   X <span class="op">=</span> <span class="va">daily_region_ag</span>,
   FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>,
+    <span class="fu">rast</span><span class="op">(</span><span class="va">x</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>,
          crs <span class="op">=</span> <span class="st">"+proj=eqc +lat_ts=0 +lat_0=0 +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"</span>,
          type <span class="op">=</span> <span class="st">"xyz"</span><span class="op">)</span>
 <span class="op">)</span>
@@ -335,24 +335,24 @@
 <span class="va">T2M_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span>
   X <span class="op">=</span> <span class="va">daily_region_ag</span>,
   FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">]</span>,
+    <span class="fu">rast</span><span class="op">(</span><span class="va">x</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">]</span>,
          crs <span class="op">=</span> <span class="st">"+proj=eqc +lat_ts=0 +lat_0=0 +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"</span>,
          type <span class="op">=</span> <span class="st">"xyz"</span><span class="op">)</span>
 <span class="op">)</span>
 
-<span class="va">raster_stack</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="va">RH2M_list</span>, <span class="va">T2M_list</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/terra/man/names.html">names</a></span><span class="op">(</span><span class="va">raster_stack</span><span class="op">)</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/names.html">names</a></span><span class="op">(</span><span class="va">raster_stack</span><span class="op">)</span>, <span class="st">"_"</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/names.html">names</a></span><span class="op">(</span><span class="va">daily_region_ag</span><span class="op">)</span>, times <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">raster_stack</span> <span class="op">&lt;-</span> <span class="fu">rast</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">RH2M_list</span>, <span class="va">T2M_list</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">raster_stack</span><span class="op">)</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">raster_stack</span><span class="op">)</span>, <span class="st">"_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">daily_region_ag</span><span class="op">)</span>, times <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Plot all the items in the stack.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html">plot</a></span><span class="op">(</span><span class="va">raster_stack</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">raster_stack</span><span class="op">)</span></code></pre></div>
 <p><img src="plot-fig1-1.png" title="plot of chunk plot-fig1" alt="plot of chunk plot-fig1" style="display: block; margin: auto;"></p>
 </div>
 <div id="converting-global-climatology-to-a-gridded-spatial-object" class="section level3">
 <h3 class="hasAnchor">
 <a href="#converting-global-climatology-to-a-gridded-spatial-object" class="anchor"></a>Converting Global Climatology to a Gridded Spatial Object</h3>
-<p>Converting global climatology to a <code>terra</code> objects is as simple as querying and then converting the resulting <code>tibble</code> to a <em>terra</em> object using <code><a href="https://rdrr.io/pkg/terra/man/rast.html">terra::rast(type = "xyz")</a></code><sup>*</sup>. Illustrated here using the <code>climatology_ag</code> object previously created are two methods.</p>
-<p><sub>*: You may experience issues if you have &lt;16GB RAM available converting the entire object to a <code><a href="https://rdrr.io/pkg/terra/man/rast.html">terra::rast()</a></code>.</sub></p>
+<p>Converting global climatology to a <code>terra</code> objects is as simple as querying and then converting the resulting <code>tibble</code> to a <em>terra</em> object using <code>terra::rast(type = "xyz")</code><sup>*</sup>. Illustrated here using the <code>climatology_ag</code> object previously created are two methods.</p>
+<p><sub>*: You may experience issues if you have &lt;16GB RAM available converting the entire object to a <code>terra::rast()</code>.</sub></p>
 <div id="for-low-memory-systems" class="section level4">
 <h4 class="hasAnchor">
 <a href="#for-low-memory-systems" class="anchor"></a>For low-memory systems</h4>
@@ -372,7 +372,7 @@
 <span class="co"># Convert the data into matrix() objects for terra to work with</span>
 <span class="va">climatology_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">climatology_list</span>, FUN <span class="op">=</span> <span class="va">as.matrix</span><span class="op">)</span>
 
-<span class="va">RH2M_ann</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span><span class="va">climatology_list</span><span class="op">$</span><span class="va">RH2M</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">15</span><span class="op">)</span><span class="op">]</span>,
+<span class="va">RH2M_ann</span> <span class="op">&lt;-</span> <span class="fu">rast</span><span class="op">(</span><span class="va">climatology_list</span><span class="op">$</span><span class="va">RH2M</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">15</span><span class="op">)</span><span class="op">]</span>,
                  crs <span class="op">=</span> <span class="st">"+proj=eqc +lat_ts=0 +lat_0=0 +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"</span>,
                  type <span class="op">=</span> <span class="st">"xyz"</span><span class="op">)</span>
 
@@ -387,33 +387,33 @@
 <span class="co">#&gt; min values  : 15.88 </span>
 <span class="co">#&gt; max values  : 93.92</span>
 
-<span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html">plot</a></span><span class="op">(</span><span class="va">RH2M_ann</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">RH2M_ann</span><span class="op">)</span></code></pre></div>
 <p><img src="create-single-raster-1.png" title="plot of chunk create-single-raster" alt="plot of chunk create-single-raster" style="display: block; margin: auto;"></p>
 </div>
 <div id="for-systems-with-more-available-memory" class="section level4">
 <h4 class="hasAnchor">
 <a href="#for-systems-with-more-available-memory" class="anchor"></a>For systems with more available memory</h4>
-<p>For systems with RAM of ~16GB or more, it is possible to create a <code><a href="https://rdrr.io/pkg/terra/man/rast.html">terra::rast()</a></code> of the resulting POWER query. To do so, subset the <code>tibble()</code> for the desired parameter and drop the <code>PARAMETER</code> column.</p>
+<p>For systems with RAM of ~16GB or more, it is possible to create a <code>terra::rast()</code> of the resulting POWER query. To do so, subset the <code>tibble()</code> for the desired parameter and drop the <code>PARAMETER</code> column.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="co"># Remove the parameter column and conver to a matrix() object for terra</span>
-<span class="va">T2M</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/coerce.html">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/subset.html">subset</a></span><span class="op">(</span><span class="va">climatology_ag</span>, <span class="va">PARAMETER</span> <span class="op">==</span> <span class="st">"T2M"</span><span class="op">)</span><span class="op">[</span>, <span class="op">-</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>
+<span class="va">T2M</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">climatology_ag</span>, <span class="va">PARAMETER</span> <span class="op">==</span> <span class="st">"T2M"</span><span class="op">)</span><span class="op">[</span>, <span class="op">-</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>
 
 <span class="co"># Preallocate a list and name it for filling with SpatRaster objects</span>
 <span class="va">T2M_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="fl">13</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/terra/man/names.html">names</a></span><span class="op">(</span><span class="va">T2M_list</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">T2M</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">T2M_list</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">T2M</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span>
 
 <span class="co"># in a loop, convert each month into a SpatRaster object</span>
-<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">T2M</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">T2M_list</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span><span class="va">T2M</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="st">"LON"</span>, <span class="st">"LAT"</span>, <span class="va">i</span><span class="op">)</span><span class="op">]</span>,
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">T2M</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">T2M_list</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">rast</span><span class="op">(</span><span class="va">T2M</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"LON"</span>, <span class="st">"LAT"</span>, <span class="va">i</span><span class="op">)</span><span class="op">]</span>,
                         crs <span class="op">=</span> <span class="st">"+proj=eqc +lat_ts=0 +lat_0=0 +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"</span>,
                         type <span class="op">=</span> <span class="st">"xyz"</span><span class="op">)</span>
 <span class="op">}</span>
 
 <span class="co"># create a stack of SpatRaster objects</span>
-<span class="va">T2M</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span><span class="va">T2M_list</span><span class="op">)</span><span class="op">)</span>
+<span class="va">T2M</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu">rast</span><span class="op">(</span><span class="va">T2M_list</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html">plot</a></span><span class="op">(</span><span class="va">T2M</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">T2M</span><span class="op">)</span></code></pre></div>
 <p><img src="create-climatology-brick-1.png" title="plot of chunk create-climatology-brick" alt="plot of chunk create-climatology-brick" style="display: block; margin: auto;"></p>
 </div>
 </div>
